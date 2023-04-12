@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string("description");
             $table->double('latitude');
             $table->double('longitude');
-            $table->enum('status', ['Pending', 'Work In Progress', 'Resolved']);
+            $table->string('image_url')->nullable();
+            $table->enum('status', ['Pending', 'Work In Progress', 'Resolved', 'Completed']);
             $table->timestamps();
         });
     }

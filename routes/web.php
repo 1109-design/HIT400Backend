@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComplaintController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('mush-dashboard');
 Route::get('/view-all-complaints/{category}', [App\Http\Controllers\HomeController::class, 'viewAllComplaints'])->name('mush-view-complaints');
 Route::get('/management-reports/locations-overview', [\App\Http\Controllers\HomeController::class, 'locationsOverview'])->name('locations-summary');
+Route::post('update-status', [\App\Http\Controllers\HomeController::class, 'updateStatus'])->name('update-status');
+Route::get('complaint-location/{id}', [\App\Http\Controllers\HomeController::class, 'complaintLocation'])->name('complaint-location');
+Route::get('download-attachment/{id}', [ComplaintController::class, 'downloadAttachment'])->name('download-attachment');
