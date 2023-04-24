@@ -35,10 +35,10 @@
                             </span></td>
 
                         <td>
-                            <a href="#" class="btn btn-sm btn-round btn-outline-primary">
+                            {{-- <a href="#" class="btn btn-sm btn-round btn-outline-primary">
                                 <i class="fas fa-fw fa-phone"></i>
-{{--                                Call Reporter--}}
-                            </a>
+
+                            </a> --}}
                             <a href="{{route('complaint-location', ['id' => $complaint->id])}}" class="btn btn-sm btn-round btn-outline-primary">
                                 <i class="fas fa-fw fa-map-pin"></i>
 
@@ -51,9 +51,13 @@
                                 Update Status
                             </button>
                             <a href="{{route('download-attachment', ['id' => $complaint->id])}}" class="btn btn-sm btn-round btn-outline-success">
-                                <i class="fas fa-fw fa-download"></i>
+                                 Download
+                                <i class="fas fa-fw fa-download">
 
-                                Download </button>
+                                </i>
+                            </a>
+
+
 
                         </td>
                     </tr>

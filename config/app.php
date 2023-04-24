@@ -124,6 +124,7 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+    'openai_api_key' => env('OPENAI_API_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -210,6 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'SentimentAnalysis' => Antoineaugusti\LaravelSentimentAnalysis\SentimentAnalysis::class,
     ])->toArray(),
 
 ];
