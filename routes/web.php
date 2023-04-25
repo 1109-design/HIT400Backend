@@ -28,3 +28,9 @@ Route::get('/management-reports/locations-overview', [\App\Http\Controllers\Home
 Route::post('update-status', [\App\Http\Controllers\HomeController::class, 'updateStatus'])->name('update-status');
 Route::get('complaint-location/{id}', [\App\Http\Controllers\HomeController::class, 'complaintLocation'])->name('complaint-location');
 Route::get('download-attachment/{id}', [ComplaintController::class, 'downloadAttachment'])->name('download-attachment');
+Route::get('update-complaints', [ComplaintController::class, 'updateSentimentAndScore']);
+Route::get('complaints-analysis', [ComplaintController::class, 'complaintsAnalysis'])->name('complaints-analysis');
+//Route::get('/complaints', [App\Http\Controllers\ComplaintController::class, 'index'])->name('complaints.index');
+
+
+

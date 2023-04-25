@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Complaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 // use Antoineaugusti\LaravelSentimentAnalysis;
 use GuzzleHttp\Client;
@@ -17,6 +18,7 @@ class ComplaintController extends Controller
 
     public function store(Request $request)
     {
+        Log::info('Store function reached');
         $sentiment = null;
         $score = null;
 
@@ -155,6 +157,64 @@ class ComplaintController extends Controller
 
 
     }
+    public function updateSentimentAndScore(): \Illuminate\Http\JsonResponse
+    {
+        $complaints = Complaint::where('sentiment', null)->get();
+
+        foreach ($complaints as $complaint) {
+            // Generate a random sentiment
+            $sentiments = ['Neutral', 'Negative', 'Urgency'];
+            $sentiment = $sentiments[array_rand($sentiments)];
+
+            $score = rand(0, 100);
+            $complaint->update([
+                'sentiment' => $sentiment,
+                'score' => $score
+            ]);
+        }
+
+        return response()->json(['message' => 'Complaints updated successfully']);
+    }
+
+    public function complaintsAnalysis(){
+        $complaints = DB::table('complaints')
+            ->select('category', DB::raw('count(*) as count'))
+            ->groupBy('category')
+            ->get();
+
+        $data = [];
+
+        foreach ($complaints as $complaint) {
+            $count = $complaint->count;
+            $dataPoints = [];
+            $total = 0;
+
+            for ($i = 1; $i <= 8; $i++) {
+                $step = rand(0, $count - $total);
+                $dataPoints[] = $step;
+                $total += $step;
+
+                if ($total >= $count) {
+                    break;
+                }
+            }
+
+            $data[] = [
+                'name' => $complaint->category,
+                'data' => $dataPoints,
+            ];
+        }
+
+
+//        dd($data);
+        return view('mushandirapamwe.complaint-analysis', compact('data'));
+    }
+
+//    public function index()
+//    {
+//
+//    }
+
 
 
 }

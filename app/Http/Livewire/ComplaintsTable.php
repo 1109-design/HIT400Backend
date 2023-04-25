@@ -8,6 +8,11 @@ use Livewire\WithPagination;
 
 class ComplaintsTable extends Component
 {
+
+    use WithPagination;
+
+    public $search = '';
+    public $filter = '';
     public $status;
     private Complaint $complaint;
     use WithPagination;
@@ -19,12 +24,36 @@ class ComplaintsTable extends Component
     public function render()
     {
         if ($this->status != 'All') {
-            $complaints = Complaint::where('status', $this->status)->orderBy('id', 'DESC')->paginate(10);
+            $complaints = Complaint::query()
+                ->when($this->search, function ($query, $search) {
+                    return $query->where('full_name', 'like', '%'.$search.'%')
+                        ->orWhere('status', 'like', '%'.$search)
+                        ->orWhere('category', 'like', '%'.$search)
+                        ->orWhere('sentiment', 'like', '%'.$search);
+                })
+                ->when($this->filter, function ($query, $filter) {
+                    return $query->where('sentiment', $filter);
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+//            return view('livewire.complaints-table', [
+//                'complaints' => $complaints]);
 
         }
         else{
-            $complaints = Complaint::where('status', '!=', 'PoorAlternative')->orderBy('id', 'DESC')
+            $complaints = Complaint::query()
+                ->when($this->search, function ($query, $search) {
+                    return $query->where('full_name', 'like', '%'.$search.'%');
+                })
+                ->when($this->filter, function ($query, $filter) {
+                    return $query->where('sentiment', $filter);
+                })
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
+
+//            return view('livewire.complaints-table', [
+//                'complaints' => $complaints]);
         }
         return view('livewire.complaints-table', compact('complaints'));
     }

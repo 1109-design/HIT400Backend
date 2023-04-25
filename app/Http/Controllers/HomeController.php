@@ -59,7 +59,7 @@ class HomeController extends Controller
             }
 
 
-            return back()->with('message', 'Complaint'.' '.request('complaint-id').' '.'Updated Successfully');
+            return back()->with('success', 'Complaint'.' '.request('complaint-id').' '.'Updated Successfully');
 
 
         } catch (\Exception $exception) {

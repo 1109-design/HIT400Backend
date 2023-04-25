@@ -16,14 +16,14 @@ class Search extends Component
 
     public function search()
     {
-        Log::info($this->searchTerm);
+        // Log::info($this->searchTerm);
         $this->searchResults = "hie";
         try {
             $scriptPath = base_path('query.py');
             $process = new Process(['python', $scriptPath, $this->searchTerm]);
             $process->run();
             $output = $process->getOutput();
-            // dd($output);
+            
             // Set the search results
             $this->searchResults = $output;
 

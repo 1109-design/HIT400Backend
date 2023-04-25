@@ -30,6 +30,17 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css"/>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
     @yield('page-css')
 </head>
 
@@ -136,7 +147,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Tables</h6>
                     <a class="collapse-item" href="{{route('locations-summary')}}">All Locations Summary</a>
-                    <a class="collapse-item" href="datatables.html">DataTables</a>
+                    <a class="collapse-item" href="{{route('complaints-analysis')}}">Complaints Analysis</a>
                 </div>
             </div>
         </li>
@@ -524,6 +535,7 @@
 <script src="{{asset('theme/js/ruang-admin.min.js')}}"></script>
 <script src="{{asset('theme/vendor/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('theme/js/demo/chart-area-demo.js')}}"></script>
+<script src="{{asset('theme/vendor/apexcharts/apexcharts.min.js')}}"></script>
 
 </body>
 
