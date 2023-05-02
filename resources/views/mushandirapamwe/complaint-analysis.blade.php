@@ -13,7 +13,8 @@
         <h5 class="card-title">Reports <span>/Today</span></h5>
 
         <!-- Line Chart -->
-        <button id="changeTypeBtn">Change to Bar</button>
+        <button id="changeTypeBtn" class="btn btn-primary btn-sm">Change to Bar</button>
+        <a  class="btn btn-primary btn-sm" href="{{route('ai-analysis')}}">Advanced Analysis</a>
         <div id="reportsChart"></div>
 
 

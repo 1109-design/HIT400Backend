@@ -29,22 +29,23 @@ class ComplaintsTable extends Component
                     return $query->where('full_name', 'like', '%'.$search.'%')
                         ->orWhere('status', 'like', '%'.$search)
                         ->orWhere('category', 'like', '%'.$search)
-                        ->orWhere('sentiment', 'like', '%'.$search);
+                        ->orWhere('sentiment', 'like', '%'.$search)
+                    ->orWhere('id', 'like', '%' . $search)
+                        ;
                 })
                 ->when($this->filter, function ($query, $filter) {
                     return $query->where('sentiment', $filter);
                 })
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
-
-//            return view('livewire.complaints-table', [
-//                'complaints' => $complaints]);
-
         }
         else{
             $complaints = Complaint::query()
                 ->when($this->search, function ($query, $search) {
-                    return $query->where('full_name', 'like', '%'.$search.'%');
+                    return $query->where('full_name', 'like', '%'.$search.'%')
+                    ->orWhere('id', 'like', '%' . $search)
+                    ->orWhere('category', 'like', '%' . $search)
+                    ->orWhere('sentiment', 'like', '%' . $search);
                 })
                 ->when($this->filter, function ($query, $filter) {
                     return $query->where('sentiment', $filter);
@@ -52,8 +53,6 @@ class ComplaintsTable extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-//            return view('livewire.complaints-table', [
-//                'complaints' => $complaints]);
         }
         return view('livewire.complaints-table', compact('complaints'));
     }
@@ -63,4 +62,5 @@ class ComplaintsTable extends Component
             $this->emit('refreshComponent');
         }
     }
+
 }

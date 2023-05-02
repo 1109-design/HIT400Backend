@@ -32,5 +32,10 @@ Route::get('update-complaints', [ComplaintController::class, 'updateSentimentAnd
 Route::get('complaints-analysis', [ComplaintController::class, 'complaintsAnalysis'])->name('complaints-analysis');
 //Route::get('/complaints', [App\Http\Controllers\ComplaintController::class, 'index'])->name('complaints.index');
 
+Route::get('ai-analysis', [ComplaintController::class, 'aiAnalysis'])->name('ai-analysis');
+Route::post('/writer/generate', [ComplaintController::class, 'generateAiAnswers']);
+
+
+
 
 

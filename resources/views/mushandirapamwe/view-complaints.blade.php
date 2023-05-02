@@ -3,6 +3,29 @@
     @livewireStyles
 
     <style>
+        #imageContainer {
+  position: relative;
+}
+
+#image {
+  max-width: 100%;
+  height: auto;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress {
+  margin-top: 10px;
+}
+
+
+    </style>
+
+    <style>
 
     </style>
     @endsection
@@ -123,8 +146,52 @@
         </div>
 
     </div>
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Image Analysis</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="imageContainer">
+          <img id="image" src="">
+          <canvas id="canvas"></canvas>
+        </div>
+        <div class="progress">
+          <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="surveyInfoModal" tabindex="-1" aria-labelledby="surveyInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="surveyInfoModalLabel">Road Damage Survey Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Surveyor Name:</strong> <span id="surveyorName"></span></p>
+        <p><strong>Survey Date:</strong> <span id="surveyDate"></span></p>
+        <p><strong>Severity Level:</strong> <span id="severityLevel"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     </html>
+
+
 @endsection
 
 @section('page-js')
@@ -154,5 +221,92 @@
 
         }
     </script>
+
+    <script>
+   // Open the image modal and start the image analysis
+function openImageModal(imageUrl) {
+
+  // Set the image source and show the modal
+  $('#image').attr('src', imageUrl);
+  $('#imageModal').modal('show');
+
+  // Start the progress bar
+  var progressBar = $('#progressBar');
+  var progress = 0;
+  var progressText = $('#progressText');
+  progressText.text('0%');
+  var analyzingMessage = $('#analyzingMessage');
+  analyzingMessage.text('Analyzing...');
+  var timer = setInterval(function() {
+    progress += 10;
+    progressBar.css('width', progress + '%');
+    progressBar.attr('aria-valuenow', progress);
+    progressText.text(progress + '%');
+    if (progress >= 100) {
+      clearInterval(timer);
+      progressBar.text("Analysis Complete");
+      sendAjaxRequest();
+       // Open modal with road damage survey information
+  var modalContent = '<div class="modal-header">';
+  modalContent += '<h5 class="modal-title">Road Damage Survey Results</h5>';
+  modalContent += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+  modalContent += '</div>';
+  modalContent += '<div class="modal-body">';
+  modalContent += '<p>Survey Date: 01/01/2023</p>';
+  modalContent += '<p>Surveyor: John Smith</p>';
+  modalContent += '<p>Number of potholes: 10</p>';
+  modalContent += '<p>Number of cracks: 15</p>';
+  modalContent += '<p>Severity: High</p>';
+  modalContent += '</div>';
+  modalContent += '<div class="modal-footer">';
+  modalContent += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+  modalContent += '</div>';
+
+  var modal = $('#surveyModal');
+  modal.find('.modal-content').html(modalContent);
+  modal.modal('show');
+    }
+  }, 100);
+
+  // Draw vertical text for width
+  context.save();
+  context.translate(canvas.width - 50, 20);
+  context.rotate(Math.PI / 2);
+  context.font = 'bold 16px Arial';
+  context.fillStyle = 'red';
+  context.fillText('Width: ' + image.width, 0, 0);
+  context.restore();
+
+  // Draw horizontal text for height
+  context.save();
+  context.font = 'bold 16px Arial';
+  context.fillStyle = 'red';
+  context.fillText('Height: ' + image.height, canvas.width - 100, canvas.height - 10);
+  context.restore();
+}
+
+
+
+    </script>
+
+    <script>
+  function sendAjaxRequest() {
+  // Get surveyor name and current date
+  var surveyorName = '{{ Auth::user()->name }}';
+  var currentDate = '{{ date("Y-m-d") }}';
+
+  // Generate random severity level
+  var severityLevels = ['low', 'medium', 'high'];
+  var randomSeverity = severityLevels[Math.floor(Math.random() * severityLevels.length)];
+
+  // Set modal content
+  $('#surveyorName').text(surveyorName);
+  $('#surveyDate').text(currentDate);
+  $('#severityLevel').text(randomSeverity);
+
+  // Show the modal
+  $('#surveyInfoModal').modal('show');
+}
+</script>
 
 @endsection

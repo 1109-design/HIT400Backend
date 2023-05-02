@@ -25,8 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        return 'okay';
-        return view('mushandirapamwe.home');
+     $pendingComplaints = Complaint::where('status', 'Pending')->count();
+     $resolvedComplaints = Complaint::where('status', 'Resolved')->count();
+     $overdueComplaints = Complaint::where('status', 'Overdue')->count();
+     $wipComplaints = Complaint::where('status', 'Work In Progress')->count();
+        return view('mushandirapamwe.home', compact('pendingComplaints', 'resolvedComplaints', 'overdueComplaints', 'wipComplaints'));
     }
 
     public function viewAllComplaints($status)

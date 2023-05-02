@@ -30,10 +30,10 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Complaints</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">650</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$pendingComplaints}}</div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                         <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                                        <span>Since last years</span>
+                                        <span>Since last months</span>
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -49,7 +49,7 @@
                             <div class="row align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Resolved Complaints</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">300</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$resolvedComplaints}}</div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                         <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                                         <span>Since last month</span>
@@ -69,7 +69,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Overdue Complaints</div>
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$overdueComplaints}}</div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                         <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
                                         <span>Since last month</span>
@@ -90,7 +90,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Complaints In Progress
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$wipComplaints}}</div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                         <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
                                         <span>Since yesterday</span>
