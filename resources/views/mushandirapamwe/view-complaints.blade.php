@@ -26,6 +26,19 @@
     </style>
 
     <style>
+        .severity-very.low(1) {
+    color: green;
+}
+.severity-low(2) {
+    color: yellow;
+}
+.severity-medium(3) {
+    color: orange;
+}
+.severity-high(4) {
+    color: red;
+}
+
 
     </style>
     @endsection
@@ -180,7 +193,14 @@
         <p><strong>Surveyor Name:</strong> <span id="surveyorName"></span></p>
         <p><strong>Survey Date:</strong> <span id="surveyDate"></span></p>
         <p><strong>Severity Level:</strong> <span id="severityLevel"></span></p>
+        <label for="imageVisibility">Image Visibility:</label>
+        <input type="range" id="imageVisibility" name="imageVisibility" min="60" max="80" value="${Math.floor(Math.random() * (80 - 60 + 1)) + 60}" onchange="updateVisibilityLabel()">
+        <span id="visibilityLevel"></span>
       </div>
+    </div>
+  </div>
+</div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
@@ -225,10 +245,13 @@
     <script>
    // Open the image modal and start the image analysis
 function openImageModal(imageUrl) {
-
   // Set the image source and show the modal
   $('#image').attr('src', imageUrl);
   $('#imageModal').modal('show');
+
+  // Get the canvas element and its context
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
 
   // Start the progress bar
   var progressBar = $('#progressBar');
@@ -237,6 +260,17 @@ function openImageModal(imageUrl) {
   progressText.text('0%');
   var analyzingMessage = $('#analyzingMessage');
   analyzingMessage.text('Analyzing...');
+
+  // Draw a blue circle at a random location on the canvas
+  function drawCircle() {
+    var x = Math.random() * canvas.width;
+    var y = Math.random() * canvas.height;
+    context.beginPath();
+    context.arc(x, y, 10, 0, 2 * Math.PI);
+    context.fillStyle = 'red';
+    context.fill();
+  }
+
   var timer = setInterval(function() {
     progress += 10;
     progressBar.css('width', progress + '%');
@@ -246,67 +280,46 @@ function openImageModal(imageUrl) {
       clearInterval(timer);
       progressBar.text("Analysis Complete");
       sendAjaxRequest();
-       // Open modal with road damage survey information
-  var modalContent = '<div class="modal-header">';
-  modalContent += '<h5 class="modal-title">Road Damage Survey Results</h5>';
-  modalContent += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
-  modalContent += '</div>';
-  modalContent += '<div class="modal-body">';
-  modalContent += '<p>Survey Date: 01/01/2023</p>';
-  modalContent += '<p>Surveyor: John Smith</p>';
-  modalContent += '<p>Number of potholes: 10</p>';
-  modalContent += '<p>Number of cracks: 15</p>';
-  modalContent += '<p>Severity: High</p>';
-  modalContent += '</div>';
-  modalContent += '<div class="modal-footer">';
-  modalContent += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
-  modalContent += '</div>';
 
-  var modal = $('#surveyModal');
-  modal.find('.modal-content').html(modalContent);
-  modal.modal('show');
+      // Open modal with road damage survey information
+      var modal = $('#surveyModal');
+      modal.find('.modal-content').html(modalContent);
+      modal.modal('show');
     }
-  }, 100);
-
-  // Draw vertical text for width
-  context.save();
-  context.translate(canvas.width - 50, 20);
-  context.rotate(Math.PI / 2);
-  context.font = 'bold 16px Arial';
-  context.fillStyle = 'red';
-  context.fillText('Width: ' + image.width, 0, 0);
-  context.restore();
-
-  // Draw horizontal text for height
-  context.save();
-  context.font = 'bold 16px Arial';
-  context.fillStyle = 'red';
-  context.fillText('Height: ' + image.height, canvas.width - 100, canvas.height - 10);
-  context.restore();
+    else {
+      drawCircle();
+    }
+  }, 1000);
 }
-
-
-
     </script>
 
-    <script>
+<script>
   function sendAjaxRequest() {
   // Get surveyor name and current date
   var surveyorName = '{{ Auth::user()->name }}';
   var currentDate = '{{ date("Y-m-d") }}';
 
   // Generate random severity level
-  var severityLevels = ['low', 'medium', 'high'];
+  var severityLevels = ['very low(1)','low(2)', 'medium(3)', 'high(4)'];
+  var visibility = ['73%','81%', '87%', '92%'];
   var randomSeverity = severityLevels[Math.floor(Math.random() * severityLevels.length)];
+  var randomVisibility = visibility[Math.floor(Math.random() * severityLevels.length)];
 
   // Set modal content
   $('#surveyorName').text(surveyorName);
   $('#surveyDate').text(currentDate);
   $('#severityLevel').text(randomSeverity);
+  $('#visibilityLevel').text(randomVisibility);
 
   // Show the modal
   $('#surveyInfoModal').modal('show');
 }
 </script>
+<script>
+    function updateVisibilityLabel() {
+    var visibility = document.getElementById("imageVisibility").value;
+    document.getElementById("visibilityLabel").textContent = visibility + "%";
+}
 
+</script>
 @endsection

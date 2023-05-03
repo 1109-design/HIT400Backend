@@ -47,7 +47,7 @@
                 @forelse($complaints as $complaint)
                 <tr @if($complaint->sentiment == 'Urgency') class="table-danger" @endif>
                     <td><a href="#">#{{$complaint->id}}</a></td>
-                    <td @if($complaint->image_url) onclick="openImageModal('{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}')" @endif>
+                    <td @if($complaint->image_url and $complaint->category == 'Road Works') onclick="openImageModal('{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}')" @endif>
     @if($complaint->image_url)
         <a href="#">
             <img src="{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}" alt="No" style="width: 20%; height: 20%;">
