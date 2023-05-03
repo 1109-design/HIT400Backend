@@ -25,7 +25,8 @@ class ComplaintController extends Controller
                 ->first();
                 Log::info($complaint);
             if ($complaint) {
-                $complaint->increment('score', 10);
+                $complaint->score
+                = $complaint->score + 10;
                 Log::info('Complaint score incremented');
             } else {
                 $complaint = new Complaint();
@@ -41,9 +42,10 @@ class ComplaintController extends Controller
                     $filename = $image->store('public/images/complaints');
                     $complaint->image_url = $filename;
                 }
-                $complaint->save();
+
                 Log::info('Complaint saved successfully');
             }
+            $complaint->save();
             return response()->json([
                 "code" => 200,
                 "message" => 'Complaint logged successfully'

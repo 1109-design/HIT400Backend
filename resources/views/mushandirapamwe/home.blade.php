@@ -105,7 +105,7 @@
                 </div>
 
                 <!-- Area Chart -->
-                <div class="col-xl-12 col-lg-7">
+                {{-- <div class="col-xl-12 col-lg-7">
                     <div class="card mb-4">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">All Reported Complaints Summary</h6>
@@ -130,17 +130,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
-            <!--Row-->
 
-            {{-- <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Do you like this template ? you can download from <a
-                            href="https://github.com/indrijunanda/RuangAdmin" class="btn btn-primary btn-sm"
-                            target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a></p>
-                </div>
-            </div> --}}
 
             <!-- Modal Logout -->
             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"

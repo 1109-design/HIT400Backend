@@ -38,7 +38,7 @@
                     <th>Category</th>
                     <th>Reported On</th>
                     <th>Sentiment</th>
-                    <th>Sentiment Score</th>
+                    <th>Public Score</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>

@@ -41,6 +41,22 @@
 
 
     </style>
+    <style>
+        .survey-feedback {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.survey-feedback button {
+  margin: 0 0.5rem;
+}
+
+.survey-feedback button i {
+  margin-right: 0.5rem;
+}
+
+    </style>
     @endsection
     @section('content')
         <!DOCTYPE html>
@@ -197,6 +213,17 @@
         <input type="range" id="imageVisibility" name="imageVisibility" min="60" max="80" value="${Math.floor(Math.random() * (80 - 60 + 1)) + 60}" onchange="updateVisibilityLabel()">
         <span id="visibilityLevel"></span>
       </div>
+      <div class="survey-feedback">
+        <button id="highlight-button" class="search-suggestion btn btn-sm btn-outline-primary">
+        You overestmated
+  </button>
+   <button id="highlight-button" class="search-suggestion btn btn-sm btn-outline-primary">
+        You underestimated
+
+  </button>
+  {{-- <button class="btn btn-outline-success"><i class="bi bi-hand-thumbs-up"></i> Like</button>
+  <button class="btn btn-outline-danger"><i class="bi bi-hand-thumbs-down"></i> Dislike</button> --}}
+</div>
     </div>
   </div>
 </div>
