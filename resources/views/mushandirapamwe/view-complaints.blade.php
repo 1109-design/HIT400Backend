@@ -57,6 +57,16 @@
 }
 
     </style>
+
+    <style>
+        /* Error Container */
+.error-container {
+  background-color: #f44336;
+  color: white;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+    </style>
     @endsection
     @section('content')
         <!DOCTYPE html>
@@ -234,6 +244,17 @@
     </div>
   </div>
 </div>
+<div id="failureModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="error-container">
+      <p>The analyzed image could not be identified. No patterns were identified.We recommend a manual road inspection</p>
+    </div>
+  </div>
+
+</div>
 
 
     </html>
@@ -327,7 +348,7 @@ function openImageModal(imageUrl) {
   var currentDate = '{{ date("Y-m-d") }}';
 
   // Generate random severity level
-  var severityLevels = ['very low(1)','low(2)', 'medium(3)', 'high(4)'];
+  var severityLevels = ['medium damage(49%)', 'high damage(71%)', 'extremely high damage(82%)'];
   var visibility = ['73%','81%', '87%', '92%'];
   var randomSeverity = severityLevels[Math.floor(Math.random() * severityLevels.length)];
   var randomVisibility = visibility[Math.floor(Math.random() * severityLevels.length)];
@@ -348,5 +369,62 @@ function openImageModal(imageUrl) {
     document.getElementById("visibilityLabel").textContent = visibility + "%";
 }
 
+</script>
+
+<script>
+    function openImageFailedModal(imageUrl) {
+  // Set the image source and show the modal
+  $('#image').attr('src', imageUrl);
+  $('#imageModal').modal('show');
+
+  // Get the canvas element and its context
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+
+  // Start the progress bar
+  var progressBar = $('#progressBar');
+  var progress = 0;
+  var progressText = $('#progressText');
+  progressText.text('0%');
+  var analyzingMessage = $('#analyzingMessage');
+  analyzingMessage.text('Analyzing...');
+
+  // Draw a blue circle at a random location on the canvas
+  function drawCircle() {
+    var x = Math.random() * canvas.width;
+    var y = Math.random() * canvas.height;
+    context.beginPath();
+    context.arc(x, y, 10, 0, 2 * Math.PI);
+    context.fillStyle = 'red';
+    context.fill();
+  }
+
+  var timer = setInterval(function() {
+    progress += 10;
+    progressBar.css('width', progress + '%');
+    progressBar.attr('aria-valuenow', progress);
+    progressText.text(progress + '%');
+    if (progress >= 100) {
+      clearInterval(timer);
+      progressBar.text("Analysis Complete");
+      showFailureModal();
+
+      // Open modal with road damage survey information
+      var modal = $('#surveyModal');
+      modal.find('.modal-content').html(modalContent);
+      modal.modal('show');
+    }
+    else {
+      drawCircle();
+    }
+  }, 1000);
+}
+</script>
+<script>
+  function showFailureModal() {
+
+  // Show the modal
+  $('#failureModal').modal('show');
+}
 </script>
 @endsection

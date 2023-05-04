@@ -24,7 +24,7 @@ class ComplaintController extends Controller
                 ->whereBetween('longitude', [$request->input('longitude') - 0.01, $request->input('longitude') + 0.01])
                 ->first();
                 Log::info($complaint);
-            if ($complaint) {
+            if ($complaint and $request->input('category') != 'Road Works' ) {
                 $complaint->score
                 = $complaint->score + 10;
                 Log::info('Complaint score incremented');

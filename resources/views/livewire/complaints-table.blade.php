@@ -47,14 +47,16 @@
                 @forelse($complaints as $complaint)
                 <tr @if($complaint->sentiment == 'Urgency') class="table-danger" @endif>
                     <td><a href="#">#{{$complaint->id}}</a></td>
-                    <td @if($complaint->image_url and $complaint->category == 'Road Works') onclick="openImageModal('{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}')" @endif>
-    @if($complaint->image_url)
-        <a href="#">
-            <img src="{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}" alt="No" style="width: 20%; height: 20%;">
-        </a>
-    @else
-        <i class="fas fa-file-alt"></i> No Attachment
-    @endif
+                    <td @if($complaint->image_url and $complaint->category == 'Road Works'  and substr($complaint->description, -1) != '.')  onclick="openImageModal('{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}')" @elseif($complaint->image_url and $complaint->category == 'Road Works' and substr($complaint->description, -1) == '.') onclick="openImageFailedModal('{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}')" @endif>
+                    {{-- <td > --}}
+
+                        @if($complaint->image_url)
+                            <a href="#">
+                                <img src="{{asset('storage/images/complaints/'.substr($complaint->image_url, strlen('public/images/complaints/')))}}" alt="No" style="width: 20%; height: 20%;">
+                            </a>
+                        @else
+                            <i class="fas fa-file-alt"></i> No Attachment
+                        @endif
 </td>
                     <td>{{ucwords($complaint->full_name)}}</td>
                     <td>{{$complaint->category}}</td>
